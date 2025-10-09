@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leather skirts Details | Thriftrove Accessories</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header & Menu stay the same -->
+  <header>
+    <h1>✨ THRIFTROVE ACCESSORIES ✨</h1>
+    <p>Unique pieces. Affordable prices.</p>
+  </header>
+
+  <nav class="menu-bar">
+    <div class="menu-container">
+      <span class="menu-toggle" onclick="toggleMenu()">☰ Menu</span>
+      <div class="menu-links" id="menuLinks">
+        <a href=index.html>Home</a>
+        <a href=jackets.html>Jackets</a>
+        <a href=bags.html>Bags</a>
+        <a href=shoes.html>Shoes</a>
+        <a href=belts.html>Belts</a>
+        <a href=hats.html>Hats</a>
+        <a href=wigs.html>Wigs</a>
+        <a href=boots.html>Boots</a>
+        <a href=purses.html>Purses</a>
+        <a href=leatherskirts.html>Leather skirts</a>
+        <a href=jeweleries.html>Jeweleries</a>
+        <a href=tops.html>Tops</a>
+        <a href="about.html">About Us</a>
+      </div>
+      <div class="cart" onclick="toggleCart()">🛒 <span id="cartCount">0</span></div>
+    </div>
+  </nav>
+
+  <!-- Product Detail Section -->
+  <main class="container">
+    <section class="product-details">
+      <img src="images/leatherbag_01.jpg" alt="High-quality leather handbag">
+      <img src="images/leatherbag 2.jpg" alt="High-quality leather handbag">
+      <img src="images/leatherbag 3.jpg" alt="High-quality leather handbag">
+      <img src="images/leatherbag 4.jpg" alt="High-quality leather handbag">
+      <img src="images/leatherbag 5.jpg" alt="High-quality leather handbag">
+      <div class="details-text">
+        <h2>leather handbags</h2>
+        <p class="price">R580</p>
+        <p class="description">
+          Genuine leather handbags in excellent condition.
+        </p>
+        <button onclick="addToCart('Vintage Brown Leather Purse', 5800)">Add to Cart</button>
+        <button onclick="window.history.back()">← Back</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Cart Overlay -->
+  <div id="cartOverlay" class="cart-overlay">
+    <div class="cart-box">
+      <h2>Your Cart</h2>
+      <ul id="cartItems"></ul>
+      <p>Total: R<span id="cartTotal">0</span></p>
+      <button onclick="checkout()">Checkout</button>
+      <button onclick="toggleCart()">Close</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

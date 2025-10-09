@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>✨ My Thrift Fashion Store ✨</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>✨ Era & Aura Thrift Store ✨</h1>
+    <p>Unique pieces. Affordable prices.</p>
+  </header>
+
+  <!-- Menu Tab -->
+  <nav class="menu-bar">
+    <div class="menu-container">
+      <span class="menu-toggle" onclick="toggleMenu()">☰ Menu</span>
+      <div class="menu-links" id="menuLinks">
+        <a href=index.html>Home</a>
+        <a href=jackets.html>Jackets</a>
+        <a href=bags.html>Bags</a>
+        <a href=shoes.html>Shoes</a>
+        <a href=belts.html>Belts</a>
+        <a href=hats.html>Hats</a>
+        <a href=wigs.html>Wigs</a>
+        <a href=boots.html>Boots</a>
+        <a href=purses.html>Purses</a>
+        <a href=leatherskirts.html>Leather skirts</a>
+        <a href=jeweleries.html>Jeweleries</a>
+        <a href=tops.html>Tops</a>
+        <a href="about.html">About Us</a>
+      </div>
+     <div class="cart" onclick="toggleCart()">
+        🛒 <span id="cartCount">0</span>
+      </div>
+  </div>
+  </nav>
+
+  <div class="container">
+    <section class="products">
+      <div class="product">
+        <img src="images/jacket_02.jpg" alt="Product 1">
+        <h3>Vintage Denim Jacket</h3>
+        <p class="price">R650</p>
+        <button onclick="addToCart('Vintage Denim Jackets', 650)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <img src="images/leatherbag_01.jpg" alt="Product 2">
+        <h3>Classic Leather Bag</h3>
+        <p class="price">R580</p>
+        <button onclick="addToCart('Classic Leather Bag', 580)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <img src="images/designerbag_01.jpg" alt="Product 2">
+        <h3>Preloved Designers Handbags</h3>
+        <p class="price">R3000</p>
+        <button onclick="addToCart('Preloved Designers Handbags', 3000)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <img src="images/shoes1.jpg" alt="veja sneakers">
+        <h3>Ladies shoes</h3>
+        <p class="price">R800</p>
+        <button onclick="addToCart('Ladies Shoes', 800)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <img src="images/laptopbag_01.jpg" alt="Product 2">
+        <h3>Laptop Leather Bags</h3>
+        <p class="price">R1200</p>
+        <button onclick="addToCart('Laptop Leather Bags', 1200)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <img src="images/belt_01.jpg" alt="Product 2">
+        <h3>Preloved Designers Belts</h3>
+        <p class="price">R1500</p>
+        <button onclick="addToCart('Preloved Designers Belts', 1500)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <img src="images/cap_01.jpg" alt="Product 2">
+        <h3>Hats & Caps</h3>
+        <p class="price">R750</p>
+        <button onclick="addToCart('Hats & Caps', 750)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <img src="images/wig_01.jpg" alt="Product 2">
+        <h3>Wigs & Hairs</h3>
+        <p class="price">R3500</p>
+        <button onclick="addToCart('Wigs', 3500)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <img src="images/boots 1.jpg" alt="Product 2">
+        <h3>Winter Boots</h3>
+        <p class="price">R600</p>
+        <button onclick="addToCart('Winter Boots', 600)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <img src="images/purse1.jpg" alt="Product 2">
+        <h3>Purses</h3>
+        <p class="price">R300</p>
+        <button onclick="addToCart('Purses', 600)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <img src="images/skirts_01.jpg" alt="Product 2">
+        <h3>Leather Skirts</h3>
+        <p class="price">R600</p>
+        <button onclick="addToCart('Leather Skirts', 600)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <img src="images/jewelerir_01.jpg" alt="Product 2">
+        <h3>Jeweleries</h3>
+        <p class="price">R600</p>
+        <button onclick="addToCart('Jeweleries', 700)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <img src="images/top_03.jpg" alt="Product 2">
+        <h3>Tops</h3>
+        <p class="price">R300</p>
+        <button onclick="addToCart('Tops', 200)">Add to Cart</button>
+        <button onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <!-- Add more products here -->
+    </section>
+
+    <div class="contact">
+      <h2>📩 Contact Us</h2>
+      <p>Email: <a href="mailto:dejoe4me@gmail.com">dejoe4me@gmail.com</a></p>
+      <p>Follow us on Instagram: <a href="https://instagram.com/yourstore" target="_blank">@yourstore</a></p>
+    </div>
+  </div>
+
+  <div id="cartOverlay" class="cart-overlay">
+    <div class="cart-box">
+      <h2>Your Cart</h2>
+      <ul id="cartItems"></ul>
+      <p>Total: R<span id="cartTotal">0</span></p>
+      <button onclick="checkout()">Checkout</button>
+      <button onclick="toggleCart()">Close</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
