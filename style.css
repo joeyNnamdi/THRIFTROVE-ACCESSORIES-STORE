@@ -66,6 +66,17 @@ header p {
   margin: 12px 0 5px;
   font-family: 'Playfair Display', serif;
   font-size: 1.2rem;
+  color:#9b6b43;
+}
+  .product a {
+  text-decoration: none;
+  color: inherit; /* keeps the same text color as the h3 */
+}
+.product a:hover h3 {
+  color: #b07d62;         /* warm highlight color */
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 .price {
   font-weight: bold;
