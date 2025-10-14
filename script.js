@@ -1,10 +1,11 @@
-// =========================
+// ========================= 
 // MENU TOGGLE
 // =========================
 function toggleMenu() {
   const menuLinks = document.getElementById("menuLinks");
-  menuLinks.classList.toggle("active");
+  menuLinks.classList.toggle("show"); // Use "show" instead of "active" for clarity (matches your CSS)
 }
+
 
 // =========================
 // CART SYSTEM (with localStorage)
@@ -14,34 +15,33 @@ let cartTotal = 0;
 
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
-  localStorage.setItem("cartTotal", cartTotal);
+  localStorage.setItem("cartTotal", cartTotal.toFixed(2));
 }
 
 function loadCart() {
   const storedCart = localStorage.getItem("cart");
   const storedTotal = localStorage.getItem("cartTotal");
 
-  if (storedCart) {
-    cart = JSON.parse(storedCart);
-  }
-  if (storedTotal) {
-    cartTotal = parseFloat(storedTotal);
-  }
+  if (storedCart) cart = JSON.parse(storedCart);
+  if (storedTotal) cartTotal = parseFloat(storedTotal);
 
+  updateCartUI();
+}
+
+function updateCartUI() {
   document.getElementById("cartCount").textContent = cart.length;
-  document.getElementById("cartTotal").textContent = cartTotal;
+  document.getElementById("cartTotal").textContent = cartTotal.toFixed(2);
   updateCartDisplay();
 }
 
 function addToCart(productName, price) {
   cart.push({ name: productName, price: price });
-
   cartTotal += price;
-  document.getElementById("cartCount").textContent = cart.length;
-  document.getElementById("cartTotal").textContent = cartTotal;
-
-  updateCartDisplay();
   saveCart();
+  updateCartUI();
+
+  // Quick visual feedback
+  alert(`${productName} added to your cart! 🛍️`);
 }
 
 function updateCartDisplay() {
@@ -50,15 +50,12 @@ function updateCartDisplay() {
 
   cart.forEach((item, index) => {
     const li = document.createElement("li");
-    li.textContent = `${item.name} - R${item.price}`;
+    li.textContent = `${item.name} - R${item.price.toFixed(2)}`;
 
-    // Remove button
     const removeBtn = document.createElement("button");
     removeBtn.textContent = "❌";
-    removeBtn.style.marginLeft = "10px";
-    removeBtn.onclick = function () {
-      removeFromCart(index);
-    };
+    removeBtn.className = "remove-btn";
+    removeBtn.onclick = () => removeFromCart(index);
 
     li.appendChild(removeBtn);
     cartItemsList.appendChild(li);
@@ -68,16 +65,13 @@ function updateCartDisplay() {
 function removeFromCart(index) {
   cartTotal -= cart[index].price;
   cart.splice(index, 1);
-
-  document.getElementById("cartCount").textContent = cart.length;
-  document.getElementById("cartTotal").textContent = cartTotal;
-
-  updateCartDisplay();
   saveCart();
+  updateCartUI();
 }
 
 function toggleCart() {
-  document.getElementById("cartOverlay").classList.toggle("active");
+  const overlay = document.getElementById("cartOverlay");
+  overlay.classList.toggle("show");
 }
 
 function checkout() {
@@ -86,17 +80,16 @@ function checkout() {
     return;
   }
 
-  alert(`Thank you for shopping! Your total is R${cartTotal}.`);
+  alert(`🎉 Thank you for shopping! Your total is R${cartTotal.toFixed(2)}.`);
 
-  // Reset cart
+  // Reset
   cart = [];
   cartTotal = 0;
-  document.getElementById("cartCount").textContent = 0;
-  document.getElementById("cartTotal").textContent = 0;
-  updateCartDisplay();
   saveCart();
+  updateCartUI();
   toggleCart();
 }
+
 
 // =========================
 // MARK AS SOLD
@@ -104,23 +97,20 @@ function checkout() {
 function markAsSold(button) {
   const productDiv = button.closest(".product");
 
-  // Disable buttons
-  const buttons = productDiv.querySelectorAll("button");
-  buttons.forEach((btn) => (btn.disabled = true));
+  // Disable both buttons
+  productDiv.querySelectorAll("button").forEach(btn => btn.disabled = true);
 
-  // Add SOLD overlay
+  // Add overlay tag
   const soldTag = document.createElement("div");
   soldTag.textContent = "SOLD OUT";
   soldTag.classList.add("sold-tag");
   productDiv.appendChild(soldTag);
 
-  // Optional: fade product
-  productDiv.style.opacity = "0.6";
+  productDiv.classList.add("sold"); // Adds your CSS fade effect
 }
+
 
 // =========================
 // INIT ON PAGE LOAD
 // =========================
-window.onload = function () {
-  loadCart();
-};
+window.addEventListener("DOMContentLoaded", loadCart);
