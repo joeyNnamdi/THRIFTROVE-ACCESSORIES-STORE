@@ -495,3 +495,17 @@ header p {
   background: #b07d62;
   border-radius: 4px;
 }
+
+.sold-tag {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 0, 0, 0.85);
+  color: white;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
