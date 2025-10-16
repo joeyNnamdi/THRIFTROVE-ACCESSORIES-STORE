@@ -429,3 +429,7 @@ header p {
     display: none !important;
   }
 }
+
+.product-details .mark-sold-btn {
+  display: none !important;
+}
