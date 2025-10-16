@@ -424,12 +424,11 @@ header p {
   }
 }
 
+.product-details .mark-sold-btn {
+  display: none !important;
+}
 @media (max-width: 768px) {
   .mark-sold-btn {
     display: none !important;
   }
-}
-
-.product-details .mark-sold-btn {
-  display: none !important;
 }
