@@ -1,7 +1,7 @@
 /* Import Retro Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@400;600&display=swap');
 
-/* General Page Style */
+/* ===== General Page Style ===== */
 body {
   font-family: 'Raleway', sans-serif;
   margin: 0;
@@ -59,7 +59,6 @@ header p {
   margin: auto;
 }
 
-/* Menu links (desktop) */
 .menu-links {
   display: flex;
   gap: 15px;
@@ -79,7 +78,7 @@ header p {
   color: #333;
 }
 
-/* Cart */
+/* Cart Button */
 .cart {
   background: #8b5e3c;
   padding: 5px 10px;
@@ -88,46 +87,13 @@ header p {
   cursor: pointer;
 }
 
-/* ===== MOBILE MENU ===== */
+/* ===== MENU TOGGLE ===== */
 .menu-toggle {
   display: none;
   cursor: pointer;
   font-size: 1.2rem;
   font-weight: bold;
   color: white;
-}
-
-/* Mobile behavior */
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
-  .menu-links {
-    display: none;
-    flex-direction: column;
-    background-color: #b07d62;
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
-    border-radius: 0 0 8px 8px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-  }
-
-  .menu-links.active {
-    display: flex;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .cart {
-    margin-left: auto;
-  }
 }
 
 /* ===== CONTENT SPACING ===== */
@@ -138,14 +104,14 @@ header p {
   margin-top: 140px; /* space for fixed header + menu */
 }
 
-/* Product Grid */
+/* ===== Product Grid ===== */
 .products {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
 }
 
-/* Product Card */
+/* ===== Product Card ===== */
 .product {
   background: #fff;
   border: 1px solid #e5d4c0;
@@ -193,7 +159,7 @@ header p {
   font-size: 1rem;
 }
 
-/* Button */
+/* ===== Buttons ===== */
 .product button {
   background: #b07d62;
   color: white;
@@ -209,7 +175,7 @@ header p {
   background: #895737;
 }
 
-/* Contact Section */
+/* ===== Contact Section ===== */
 .contact {
   margin-top: 40px;
   text-align: center;
@@ -248,7 +214,7 @@ header p {
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* About Section */
+/* ===== About Section ===== */
 .about-section {
   max-width: 800px;
   margin: auto;
@@ -262,7 +228,7 @@ header p {
   color: #8b5e3c;
 }
 
-/* SOLD OUT Overlay */
+/* ===== SOLD OUT Overlay ===== */
 .sold-tag {
   position: absolute;
   top: 40%;
@@ -277,7 +243,7 @@ header p {
   text-transform: uppercase;
 }
 
-/* Product Details */
+/* ===== Product Details ===== */
 .product-details {
   display: flex;
   flex-direction: row;
@@ -340,24 +306,6 @@ header p {
   background: #895737;
 }
 
-/* Mobile Product Details */
-@media (max-width: 700px) {
-  .product-details {
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
-  }
-
-  .details-text {
-    text-align: center;
-  }
-
-  .product-details img {
-    max-width: 100%;
-    aspect-ratio: auto;
-  }
-}
-
 /* ===== Product Image Gallery ===== */
 .product-gallery {
   display: flex;
@@ -376,7 +324,7 @@ header p {
   scroll-snap-align: start;
 }
 
-/* Optional Scrollbar Style */
+/* Scrollbar Styling */
 .product-gallery::-webkit-scrollbar {
   height: 8px;
 }
@@ -386,108 +334,7 @@ header p {
   border-radius: 4px;
 }
 
-/* 📱 Mobile Adjustments */
-@media (max-width: 600px) {
-  header h1 {
-    font-size: 1.5rem;
-  }
-
-  header p {
-    font-size: 0.9rem;
-  }
-
-  .products {
-    grid-template-columns: 1fr;
-  }
-
-  .product img {
-    height: auto;
-  }
-
-  .product button {
-    width: 100%;
-    padding: 12px;
-  }
-
-  .container {
-    padding: 10px;
-  }
-}
-
-/* ====== MENU BAR ====== */
-.menu-bar {
-  background-color: #333;
-  color: white;
-  padding: 10px 20px;
-  position: relative;
-}
-
-.menu-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.menu-toggle {
-  display: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.menu-links {
-  display: flex;
-  gap: 15px;
-  transition: all 0.3s ease;
-}
-
-.menu-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 5px 10px;
-  border-radius: 4px;
-  transition: background 0.3s ease;
-}
-
-.menu-links a:hover {
-  background-color: #f8e1d4;
-  color: #333;
-}
-
-/* ===== MOBILE MENU ===== */
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
-  .menu-links {
-    display: none;
-    flex-direction: column;
-    background-color: #333;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
-  }
-
-  .menu-links.active {
-    display: flex;
-  }
-
-  .cart {
-    margin-left: auto;
-  }
-
-  /* Hide “Mark as SOLD” button on mobile */
-  .mark-sold-btn {
-    display: none;
-  }
-}
-
-/* ===== MARK AS SOLD STYLING ===== */
+/* ===== MARK AS SOLD BUTTON ===== */
 .mark-sold-btn {
   background-color: #d9534f;
   color: white;
@@ -501,4 +348,78 @@ header p {
 
 .mark-sold-btn:hover {
   background-color: #c9302c;
+}
+
+/* ===== MOBILE ADJUSTMENTS ===== */
+@media (max-width: 768px) {
+  /* Smaller Header */
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  header p {
+    font-size: 0.9rem;
+  }
+
+  /* Toggle menu visible */
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Hide links until toggled */
+  .menu-links {
+    display: none;
+    flex-direction: column;
+    background-color: #b07d62;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 0 0 8px 8px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+  }
+
+  .menu-links.active {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Cart */
+  .cart {
+    margin-left: auto;
+  }
+
+  /* Hide Mark as SOLD button */
+  .mark-sold-btn {
+    display: none !important;
+  }
+
+  /* Product layout on mobile */
+  .products {
+    grid-template-columns: 1fr;
+  }
+
+  .product img {
+    height: auto;
+  }
+
+  .product button {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .product-details {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .details-text {
+    text-align: center;
+  }
 }
