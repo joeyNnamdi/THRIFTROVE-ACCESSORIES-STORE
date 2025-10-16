@@ -413,3 +413,92 @@ header p {
     padding: 10px;
   }
 }
+
+/* ====== MENU BAR ====== */
+.menu-bar {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.menu-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.menu-links {
+  display: flex;
+  gap: 15px;
+  transition: all 0.3s ease;
+}
+
+.menu-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.menu-links a:hover {
+  background-color: #f8e1d4;
+  color: #333;
+}
+
+/* ===== MOBILE MENU ===== */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .menu-links {
+    display: none;
+    flex-direction: column;
+    background-color: #333;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .menu-links.active {
+    display: flex;
+  }
+
+  .cart {
+    margin-left: auto;
+  }
+
+  /* Hide “Mark as SOLD” button on mobile */
+  .mark-sold-btn {
+    display: none;
+  }
+}
+
+/* ===== MARK AS SOLD STYLING ===== */
+.mark-sold-btn {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.mark-sold-btn:hover {
+  background-color: #c9302c;
+}
