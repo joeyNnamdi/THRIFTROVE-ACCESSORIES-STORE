@@ -3,7 +3,7 @@
 // =========================
 function toggleMenu() {
   const menuLinks = document.getElementById("menuLinks");
-  menuLinks.classList.toggle("show"); // Use "show" instead of "active" for clarity (matches your CSS)
+  menuLinks.classList.toggle("active"); 
 }
 
 
