@@ -1,104 +1,60 @@
-// ========================= 
-// MENU TOGGLE (Mobile)
-// =========================
-function toggleMenu() {
-  const menuLinks = document.getElementById("menuLinks");
-  menuLinks.classList.toggle("active");
-}
-
-// =========================
-// CART SYSTEM (with localStorage)
-// =========================
+// ===== CART FUNCTIONALITY =====
 let cart = [];
-let cartTotal = 0;
+let cartCount = 0;
 
-// Save cart to localStorage
-function saveCart() {
-  localStorage.setItem("cart", JSON.stringify(cart));
-  localStorage.setItem("cartTotal", cartTotal);
-}
-
-// Load cart from localStorage
-function loadCart() {
-  const storedCart = localStorage.getItem("cart");
-  const storedTotal = localStorage.getItem("cartTotal");
-
-  if (storedCart) cart = JSON.parse(storedCart);
-  if (storedTotal) cartTotal = parseFloat(storedTotal);
-
-  updateCartUI();
-}
-
-// Add item to cart
+// Add product to cart
 function addToCart(productName, price) {
   cart.push({ name: productName, price: price });
-  cartTotal += price;
-  updateCartUI();
-  saveCart();
+  cartCount++;
+  updateCart();
 }
 
 // Update cart display
-function updateCartUI() {
-  const cartItemsList = document.getElementById("cartItems");
-  const cartCount = document.getElementById("cartCount");
-  const cartTotalElem = document.getElementById("cartTotal");
+function updateCart() {
+  const cartItems = document.getElementById("cartItems");
+  const cartTotal = document.getElementById("cartTotal");
 
-  cartItemsList.innerHTML = "";
+  cartItems.innerHTML = "";
+  let total = 0;
 
   cart.forEach((item, index) => {
     const li = document.createElement("li");
     li.textContent = `${item.name} - R${item.price}`;
-
-    // Remove button
-    const removeBtn = document.createElement("button");
-    removeBtn.textContent = "❌";
-    removeBtn.style.marginLeft = "10px";
-    removeBtn.onclick = () => removeFromCart(index);
-
-    li.appendChild(removeBtn);
-    cartItemsList.appendChild(li);
+    cartItems.appendChild(li);
+    total += item.price;
   });
 
-  cartCount.textContent = cart.length;
-  cartTotalElem.textContent = cartTotal;
-}
-
-// Remove item from cart
-function removeFromCart(index) {
-  cartTotal -= cart[index].price;
-  cart.splice(index, 1);
-  updateCartUI();
-  saveCart();
+  cartTotal.textContent = total;
+  document.getElementById("cartCount").textContent = cartCount;
 }
 
 // Toggle cart overlay
 function toggleCart() {
-  document.getElementById("cartOverlay").classList.toggle("show");
+  const overlay = document.getElementById("cartOverlay");
+  overlay.classList.toggle("show");
 }
 
-// Checkout
+// Checkout (simple alert for demo)
 function checkout() {
   if (cart.length === 0) {
     alert("Your cart is empty!");
     return;
   }
-  alert(`Thank you for shopping! Your total is R${cartTotal}.`);
+  alert("Thank you for your purchase!");
   cart = [];
-  cartTotal = 0;
-  updateCartUI();
-  saveCart();
+  cartCount = 0;
+  updateCart();
   toggleCart();
 }
 
-// =========================
-// MARK AS SOLD (only on product list pages)
-// =========================
+// ===== MARK AS SOLD FUNCTIONALITY =====
+// Only marks product as sold, does NOT create any new button
 function markAsSold(button) {
   const productDiv = button.closest(".product");
 
-  // Disable buttons
+  // Disable all buttons in this product
   const buttons = productDiv.querySelectorAll("button");
-  buttons.forEach(btn => (btn.disabled = true));
+  buttons.forEach((btn) => (btn.disabled = true));
 
   // Add SOLD overlay
   const soldTag = document.createElement("div");
@@ -106,27 +62,12 @@ function markAsSold(button) {
   soldTag.classList.add("sold-tag");
   productDiv.appendChild(soldTag);
 
-  // Optional: fade product
+  // Fade the product visually
   productDiv.style.opacity = "0.6";
 }
 
-// =========================
-// INIT ON PAGE LOAD
-// =========================
-window.onload = function () {
-  loadCart();
-
-  // Only add "Mark as SOLD" buttons if NOT on a product detail page
-  const isDetailPage = document.querySelector(".product-details");
-  if (!isDetailPage) {
-    document.querySelectorAll(".product").forEach(product => {
-      const soldBtn = document.createElement("button");
-      soldBtn.innerText = "Mark as SOLD";
-      soldBtn.classList.add("mark-sold-btn");
-      soldBtn.onclick = function () {
-        markAsSold(soldBtn);
-      };
-      product.appendChild(soldBtn);
-    });
-  }
-};
+// ===== MOBILE MENU TOGGLE =====
+function toggleMenu() {
+  const menuLinks = document.getElementById("menuLinks");
+  menuLinks.classList.toggle("active");
+}
