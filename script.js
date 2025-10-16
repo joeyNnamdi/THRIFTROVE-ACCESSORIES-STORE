@@ -1,11 +1,10 @@
 // ========================= 
-// MENU TOGGLE
+// MENU TOGGLE (Mobile)
 // =========================
 function toggleMenu() {
   const menuLinks = document.getElementById("menuLinks");
-  menuLinks.classList.toggle("active"); 
+  menuLinks.classList.toggle("active");
 }
-
 
 // =========================
 // CART SYSTEM (with localStorage)
@@ -13,11 +12,13 @@ function toggleMenu() {
 let cart = [];
 let cartTotal = 0;
 
+// Save cart to localStorage
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
-  localStorage.setItem("cartTotal", cartTotal.toFixed(2));
+  localStorage.setItem("cartTotal", cartTotal);
 }
 
+// Load cart from localStorage
 function loadCart() {
   const storedCart = localStorage.getItem("cart");
   const storedTotal = localStorage.getItem("cartTotal");
@@ -28,89 +29,104 @@ function loadCart() {
   updateCartUI();
 }
 
-function updateCartUI() {
-  document.getElementById("cartCount").textContent = cart.length;
-  document.getElementById("cartTotal").textContent = cartTotal.toFixed(2);
-  updateCartDisplay();
-}
-
+// Add item to cart
 function addToCart(productName, price) {
   cart.push({ name: productName, price: price });
   cartTotal += price;
-  saveCart();
   updateCartUI();
-
-  // Quick visual feedback
-  alert(`${productName} added to your cart! 🛍️`);
+  saveCart();
 }
 
-function updateCartDisplay() {
+// Update cart display
+function updateCartUI() {
   const cartItemsList = document.getElementById("cartItems");
+  const cartCount = document.getElementById("cartCount");
+  const cartTotalElem = document.getElementById("cartTotal");
+
   cartItemsList.innerHTML = "";
 
   cart.forEach((item, index) => {
     const li = document.createElement("li");
-    li.textContent = `${item.name} - R${item.price.toFixed(2)}`;
+    li.textContent = `${item.name} - R${item.price}`;
 
+    // Remove button
     const removeBtn = document.createElement("button");
     removeBtn.textContent = "❌";
-    removeBtn.className = "remove-btn";
+    removeBtn.style.marginLeft = "10px";
     removeBtn.onclick = () => removeFromCart(index);
 
     li.appendChild(removeBtn);
     cartItemsList.appendChild(li);
   });
+
+  cartCount.textContent = cart.length;
+  cartTotalElem.textContent = cartTotal;
 }
 
+// Remove item from cart
 function removeFromCart(index) {
   cartTotal -= cart[index].price;
   cart.splice(index, 1);
-  saveCart();
   updateCartUI();
+  saveCart();
 }
 
+// Toggle cart overlay
 function toggleCart() {
-  const overlay = document.getElementById("cartOverlay");
-  overlay.classList.toggle("show");
+  document.getElementById("cartOverlay").classList.toggle("show");
 }
 
+// Checkout
 function checkout() {
   if (cart.length === 0) {
     alert("Your cart is empty!");
     return;
   }
-
-  alert(`🎉 Thank you for shopping! Your total is R${cartTotal.toFixed(2)}.`);
-
-  // Reset
+  alert(`Thank you for shopping! Your total is R${cartTotal}.`);
   cart = [];
   cartTotal = 0;
-  saveCart();
   updateCartUI();
+  saveCart();
   toggleCart();
 }
 
-
 // =========================
-// MARK AS SOLD
+// MARK AS SOLD (only on product list pages)
 // =========================
 function markAsSold(button) {
   const productDiv = button.closest(".product");
 
-  // Disable both buttons
-  productDiv.querySelectorAll("button").forEach(btn => btn.disabled = true);
+  // Disable buttons
+  const buttons = productDiv.querySelectorAll("button");
+  buttons.forEach(btn => (btn.disabled = true));
 
-  // Add overlay tag
+  // Add SOLD overlay
   const soldTag = document.createElement("div");
   soldTag.textContent = "SOLD OUT";
   soldTag.classList.add("sold-tag");
   productDiv.appendChild(soldTag);
 
-  productDiv.classList.add("sold"); // Adds your CSS fade effect
+  // Optional: fade product
+  productDiv.style.opacity = "0.6";
 }
-
 
 // =========================
 // INIT ON PAGE LOAD
 // =========================
-window.addEventListener("DOMContentLoaded", loadCart);
+window.onload = function () {
+  loadCart();
+
+  // Only add "Mark as SOLD" buttons if NOT on a product detail page
+  const isDetailPage = document.querySelector(".product-details");
+  if (!isDetailPage) {
+    document.querySelectorAll(".product").forEach(product => {
+      const soldBtn = document.createElement("button");
+      soldBtn.innerText = "Mark as SOLD";
+      soldBtn.classList.add("mark-sold-btn");
+      soldBtn.onclick = function () {
+        markAsSold(soldBtn);
+      };
+      product.appendChild(soldBtn);
+    });
+  }
+};
