@@ -38,6 +38,47 @@ header p {
   color: #444;
 }
 
+/* ===== LOGO STYLING ===== */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+  border-radius: 10px;
+}
+
+.site-text h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #111;
+}
+
+.site-text p {
+  margin: 0;
+  font-size: 1rem;
+  color: #444;
+}
+
+/* Mobile adjustment */
+@media (max-width: 768px) {
+  .logo-container {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  .site-text h1 {
+    font-size: 1.3rem;
+  }
+}
 /* ===== MENU BAR ===== */
 .menu-bar {
   background-color: #b07d62;
