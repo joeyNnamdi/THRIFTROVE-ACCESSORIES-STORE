@@ -432,3 +432,21 @@ header p {
     display: none !important;
   }
 }
+
+.site-footer {
+  background: #333;
+  text-align: center;
+  color: #fff;
+  padding: 15px 10px;
+  margin-top: 40px;
+}
+
+.site-footer a {
+  color: #f5c542;
+  text-decoration: none;
+  margin: 0 6px;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
