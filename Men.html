@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>✨ My Thrift Fashion Store ✨</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>✨ THRIFTROVE ACCESSORIES ✨</h1>
+    <p>Unique pieces. Affordable prices.</p>
+  </header>
+
+  <!-- Menu Tab -->
+  <nav class="menu-bar">
+    <div class="menu-container">
+      <span class="menu-toggle" onclick="toggleMenu()">☰ Menu</span>
+      <div class="menu-links" id="menuLinks">
+        <a href=index.html>Home</a>
+        <a href=jackets.html>Jackets</a>
+        <a href=bags.html>Bags</a>
+        <a href=shoes.html>Shoes</a>
+        <a href=belts.html>Belts</a>
+        <a href=hats.html>Hats</a>
+        <a href=wigs.html>Wigs</a>
+        <a href=boots.html>Boots</a>
+        <a href=purses.html>Purses</a>
+        <a href=leatherskirts.html>Leather skirts</a>
+        <a href=jeweleries.html>Jeweleries</a>
+        <a href=tops.html>Tops</a>
+        <a href="about.html">About Us</a>
+      </div>
+     <div class="cart" onclick="toggleCart()">
+        🛒 <span id="cartCount">0</span>
+      </div>
+  </div>
+  </nav>
+
+  <div class="container">
+    <section class="products">
+      
+      <div class="product">
+        <a href="bags-details.html">
+        <img src="images/leatherbag_01.jpg" alt="Product 2">
+        
+        <h3>Classic Leather Bag</h3>
+        </a>
+        <p class="price">R580</p>
+        <button onclick="addToCart('Classic Leather Bag', 580)">Add to Cart</button>
+        <button class="mark-sold-btn" onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+      <div class="product">
+        <a href="bag-detail-2.html">
+        <img src="images/bal 1.jpg" alt="Product 2">
+        
+        <h3>Balenciaga XL  Leather Bag</h3>
+        </a>
+        <p class="price">R2500</p>
+        <button onclick="addToCart('Classic Leather Bag', 2500)">Add to Cart</button>
+        <button class="mark-sold-btn" onclick="markAsSold(this)">Mark as SOLD</button>
+      </div>
+
+
+      <!-- Add more products here -->
+    </section>
+
+    <div class="contact">
+      <h2>📩 Contact Us</h2>
+      <p>Email: <a href="mailto:sales@thriftrove-accessories-store.co.za">sales@thriftrove-accessories-store.co.za</a></p>
+      <p>Follow us on Instagram: <a href="https://instagram.com/yourstore" target="_blank">@yourstore</a></p>
+    </div>
+  </div>
+
+  <div id="cartOverlay" class="cart-overlay">
+    <div class="cart-box">
+      <h2>Your Cart</h2>
+      <ul id="cartItems"></ul>
+      <p>Total: R<span id="cartTotal">0</span></p>
+      <button onclick="checkout()">Checkout</button>
+      <button onclick="toggleCart()">Close</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+   <p>© 2025 Thriftrove Accessories — All Rights Reserved</p>
+   <a href="terms.html">Terms & Conditions</a> |
+   <a href="delivery.html">Delivery Policy</a> |
+   <a href="returns.html">Return Policy</a>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
