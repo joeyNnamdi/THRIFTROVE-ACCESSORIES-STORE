@@ -92,7 +92,7 @@ header p {
 /* ===== CART ICON ===== */
 .cart {
   background: #8b5e3c;
-  padding: 6px 12px;
+  padding: 8px 14px;
   border-radius: 20px;
   color: white;
   cursor: pointer;
@@ -400,4 +400,18 @@ header p {
     opacity: 0 !important;
     pointer-events: none;
   }
+}
+
+/* --- iPhone Cart Icon Fix --- */
+.menu-bar, .menu-container {
+  overflow: visible !important;
+}
+
+.cart {
+  padding: 8px 14px;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: env(safe-area-inset-right);
 }
