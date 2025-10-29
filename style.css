@@ -450,3 +450,17 @@ header p {
 .site-footer a:hover {
   text-decoration: underline;
 }
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
+.remove-btn:hover {
+  color: darkred;
+}
