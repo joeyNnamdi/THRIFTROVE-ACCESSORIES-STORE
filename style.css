@@ -1,7 +1,7 @@
-/* Import Retro Google Font */
+/* Import Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@400;600&display=swap');
 
-/* ===== General Page Style ===== */
+/* ===== BASE ===== */
 body {
   font-family: 'Raleway', sans-serif;
   margin: 0;
@@ -10,7 +10,7 @@ body {
   color: #4a3f35;
 }
 
-/* ===== Fixed Header ===== */
+/* ===== HEADER ===== */
 header {
   position: fixed;
   top: 0;
@@ -29,7 +29,6 @@ header h1 {
   font-size: 2rem;
   font-weight: bold;
   color: #111;
-  text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
 }
 
 header p {
@@ -59,18 +58,13 @@ header p {
   margin: auto;
 }
 
-/* Unified menu links styling */
+/* ===== MENU LINKS ===== */
 .menu-links {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
   align-items: center;
-  pointer-events: none; /* prevent invisible overlap clicks */
-}
-
-.menu-links.active {
-  pointer-events: auto; /* enable clicks only when visible */
 }
 
 .menu-links a {
@@ -87,7 +81,7 @@ header p {
   color: #333;
 }
 
-/* Cart Button */
+/* ===== CART BUTTON ===== */
 .cart {
   background: #8b5e3c;
   padding: 5px 10px;
@@ -105,24 +99,24 @@ header p {
   color: white;
 }
 
-/* ===== CONTENT SPACING ===== */
+/* ===== CONTAINER ===== */
 .container {
   padding: 20px;
   max-width: 1000px;
   margin: auto;
-  margin-top: 140px; /* space for header + menu */
+  margin-top: 140px;
   position: relative;
-  z-index: 10; /* ensure it’s clickable */
+  z-index: 10;
 }
 
-/* ===== Product Grid ===== */
+/* ===== PRODUCTS GRID ===== */
 .products {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
 }
 
-/* ===== Product Card ===== */
+/* ===== PRODUCT CARD ===== */
 .product {
   background: #fff;
   border: 1px solid #e5d4c0;
@@ -159,9 +153,7 @@ header p {
 
 .product a:hover h3 {
   color: #b07d62;
-  transform: translateY(-2px);
   transition: all 0.3s ease;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .price {
@@ -170,7 +162,7 @@ header p {
   font-size: 1rem;
 }
 
-/* ===== Buttons ===== */
+/* ===== BUTTONS ===== */
 .product button {
   background: #b07d62;
   color: white;
@@ -180,7 +172,7 @@ header p {
   cursor: pointer;
   font-family: 'Raleway', sans-serif;
   transition: background 0.2s ease;
-  min-height: 44px; /* mobile tap optimization */
+  min-height: 44px;
   touch-action: manipulation;
 }
 
@@ -188,7 +180,7 @@ header p {
   background: #895737;
 }
 
-/* ===== Contact Section ===== */
+/* ===== CONTACT ===== */
 .contact {
   margin-top: 40px;
   text-align: center;
@@ -227,7 +219,7 @@ header p {
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* ===== SOLD OUT Overlay ===== */
+/* ===== SOLD TAG ===== */
 .sold-tag {
   position: absolute;
   top: 40%;
@@ -242,7 +234,7 @@ header p {
   text-transform: uppercase;
 }
 
-/* ===== REMOVE BUTTON IN CART ===== */
+/* ===== REMOVE BUTTON ===== */
 .remove-btn {
   background: none;
   border: none;
@@ -257,7 +249,26 @@ header p {
   color: darkred;
 }
 
-/* ===== MOBILE ADJUSTMENTS ===== */
+/* ===== PRODUCT DETAILS PAGE ===== */
+.product-details {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+.product-details img {
+  width: 50%;
+  max-width: 400px;
+  border-radius: 10px;
+}
+
+.details-text {
+  width: 50%;
+}
+
+/* ===== MOBILE STYLING ===== */
 @media (max-width: 768px) {
   header h1 { font-size: 1.5rem; }
   header p { font-size: 0.9rem; }
@@ -275,34 +286,31 @@ header p {
     text-align: center;
     padding: 10px 0;
     border-radius: 0 0 8px 8px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
   }
 
   .menu-links.active {
     display: flex;
-    opacity: 1;
-    transform: translateY(0);
   }
 
-  .cart { margin-left: auto; }
-
   .products { grid-template-columns: 1fr; }
-
   .product img { height: auto; }
-
   .product button { width: 100%; padding: 12px; }
-
-  .mark-sold-btn { display: none !important; }
 
   .product-details {
     flex-direction: column;
+    align-items: center;
     text-align: center;
     gap: 15px;
   }
 
-  .details-text { text-align: center; }
+  .product-details img {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .details-text {
+    width: 100%;
+  }
 }
 
 /* ===== FOOTER ===== */
