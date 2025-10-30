@@ -415,3 +415,48 @@ header p {
   justify-content: center;
   margin-right: env(safe-area-inset-right);
 }
+
+/* ===== FIX: Cart Icon Alignment & Visibility on All Devices ===== */
+.cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  background: #8b5e3c;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-size: 1.2rem;
+  line-height: 1;
+  margin-right: env(safe-area-inset-right);
+  transition: background 0.2s ease;
+}
+
+.cart:hover {
+  background: #a26b45;
+}
+
+/* Cart icon image or emoji spacing */
+.cart img,
+.cart i {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+/* ===== Item Count Bubble ===== */
+#cartCount {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ff4d4d;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content
