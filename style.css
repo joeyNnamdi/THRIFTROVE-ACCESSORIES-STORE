@@ -328,6 +328,16 @@ header p {
   }
 
   .cart {
-    font-size: 1.4rem;
-    padding: 10px 16px;
-    margin-right: env(safe-area
+    margin-right: env(safe-area-inset-right, 8px);
+  }
+
+  .product-details {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Hide mark as sold on mobile */
+  .mark-sold-btn {
+    display: none !important;
+  }
+}
