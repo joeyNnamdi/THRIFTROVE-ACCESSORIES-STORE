@@ -278,6 +278,24 @@ header p {
 @media (max-width: 768px) {
   header h1 {
     font-size: 1.5rem;
+/* ===== PRODUCT TITLE COLOR FIX & INTERACTION ON MOBILE ===== */
+.product h3,
+.product a h3 {
+  color: #9b6b43 !important;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.product a:visited h3 {
+  color: #9b6b43 !important;
+}
+
+/* Darker color on hover or tap for better contrast */
+.product a:hover h3,
+.product a:active h3 {
+  color: #7a5032 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
   }
 
   .menu-toggle {
