@@ -1,3 +1,4 @@
+
 /* ===== IMPORT FONTS ===== */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@400;600&display=swap');
 
@@ -70,7 +71,7 @@ header p {
 
 .menu-links a {
   color: white;
-  text-decoration: none;
+  text-decoration: none; /* removes underline */
   font-weight: bold;
   padding: 6px 10px;
   border-radius: 4px;
@@ -175,17 +176,28 @@ header p {
   border-radius: 8px;
 }
 
-/* ===== PRODUCT TITLE (BROWN EVERYWHERE) ===== */
-.product h3,
-.product a h3 {
+/* ===== PRODUCT TITLE ===== */
+.product h3 {
+  margin: 12px 0 5px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
   color: #9b6b43;
   transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.product a {
+  text-decoration: none; /* remove underline */
+}
+
+.product a:visited h3 {
+  color: #9b6b43;
 }
 
 .product a:hover h3,
 .product a:active h3 {
   color: #7a5032;
   text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  text-decoration: none;
 }
 
 /* ===== SOLD OUT OVERLAY ===== */
@@ -241,10 +253,6 @@ header p {
   transition: background 0.2s ease;
 }
 
-.mark-sold-btn:hover {
-  background-color: #c9302c;
-}
-
 /* ===== CART OVERLAY ===== */
 .cart-overlay {
   display: none;
@@ -287,9 +295,8 @@ header p {
   text-decoration: underline;
 }
 
-/* ===== MOBILE RESPONSIVE ===== */
+/* ===== MOBILE RESPONSIVENESS ===== */
 @media (max-width: 768px) {
-
   header h1 {
     font-size: 1.5rem;
   }
@@ -320,35 +327,7 @@ header p {
     transform: translateY(0);
   }
 
-  /* Fix Cart Icon Visibility */
   .cart {
     font-size: 1.4rem;
     padding: 10px 16px;
-    margin-right: env(safe-area-inset-right);
-  }
-
-  #cartCount {
-    top: -8px;
-    right: -8px;
-    transform: scale(1.1);
-  }
-
-  /* Fix Product Details Layout */
-  .product-details {
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
-  }
-
-  .details-text {
-    text-align: center;
-  }
-
-  /* Hide Mark as Sold Button on Mobile */
-  .mark-sold-btn {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-}
+    margin-right: env(safe-area
