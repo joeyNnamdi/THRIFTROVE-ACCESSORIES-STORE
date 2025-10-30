@@ -18,6 +18,7 @@ header {
   left: 0;
   width: 100%;
   background: linear-gradient(to right, #ffffff, #fce4ec);
+  color: #333;
   z-index: 1000;
   padding: 15px 0;
   text-align: center;
@@ -40,12 +41,14 @@ header p {
 /* ===== MENU BAR ===== */
 .menu-bar {
   background-color: #b07d62;
+  color: white;
   padding: 10px 20px;
   position: fixed;
   top: 80px;
+  left: 0;
   width: 100%;
-  z-index: 1200;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  z-index: 999;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .menu-container {
@@ -60,8 +63,9 @@ header p {
 /* ===== MENU LINKS ===== */
 .menu-links {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
 }
 
 .menu-links a {
@@ -70,7 +74,7 @@ header p {
   font-weight: bold;
   padding: 6px 10px;
   border-radius: 4px;
-  transition: 0.2s;
+  transition: background 0.3s;
 }
 
 .menu-links a:hover {
@@ -82,7 +86,8 @@ header p {
 .menu-toggle {
   display: none;
   cursor: pointer;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
+  font-weight: bold;
   color: white;
 }
 
@@ -98,21 +103,29 @@ header p {
   cursor: pointer;
   color: white;
   font-size: 1.3rem;
+  line-height: 1;
   margin-right: env(safe-area-inset-right);
-  transition: 0.2s;
+  transition: background 0.2s ease;
 }
 
-.cart img, .cart i {
+.cart:hover {
+  background: #a26b45;
+}
+
+.cart img,
+.cart i {
   width: 24px;
   height: 24px;
+  object-fit: contain;
 }
 
-/* ===== CART BUBBLE ===== */
+/* ===== Item Count Bubble ===== */
 #cartCount {
   position: absolute;
   top: -6px;
   right: -6px;
-  background: red;
+  background: #ff4d4d;
+  color: white;
   font-size: 0.75rem;
   font-weight: bold;
   border-radius: 50%;
@@ -121,10 +134,10 @@ header p {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
 }
 
-/* ===== CONTENT ===== */
+/* ===== CONTAINER ===== */
 .container {
   padding: 20px;
   max-width: 1000px;
@@ -146,7 +159,8 @@ header p {
   padding: 15px;
   border-radius: 10px;
   text-align: center;
-  transition: 0.2s;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .product:hover {
@@ -155,45 +169,67 @@ header p {
 }
 
 .product img {
-  width: 100%;
+  max-width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 8px;
 }
 
-.product h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
-  color: #9b6b43;
-}
-
-/* ===== BUTTON ===== */
-.product button {
-  background: #b07d62;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.product button:hover {
-  background: #895737;
-}
-
-/* ===== SOLD TAG ===== */
+/* ===== SOLD OUT OVERLAY ===== */
 .sold-tag {
   position: absolute;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255,0,0,0.85);
+  background: rgba(255, 0, 0, 0.85);
   color: white;
+  font-weight: bold;
   padding: 6px 12px;
   border-radius: 6px;
   font-size: 1rem;
-  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* ===== PRODUCT DETAILS ===== */
+.product-details {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 30px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.product-details img {
+  width: 100%;
+  max-width: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.details-text {
+  flex: 1;
+  text-align: left;
+}
+
+/* ===== MARK AS SOLD BUTTON ===== */
+.mark-sold-btn {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.mark-sold-btn:hover {
+  background-color: #c9302c;
 }
 
 /* ===== CART OVERLAY ===== */
@@ -201,7 +237,7 @@ header p {
   display: none;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0,0,0,0.5);
   justify-content: center;
   align-items: center;
   z-index: 2000;
@@ -212,54 +248,111 @@ header p {
 }
 
 .cart-box {
-  background: #fff;
+  background: white;
   padding: 20px;
   border-radius: 8px;
   width: 300px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 /* ===== FOOTER ===== */
 .site-footer {
   background: #333;
+  text-align: center;
   color: #fff;
   padding: 15px 10px;
-  text-align: center;
+  margin-top: 40px;
 }
 
-/* ===== RESPONSIVE ===== */
+.site-footer a {
+  color: #f5c542;
+  text-decoration: none;
+  margin: 0 6px;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ===== MOBILE RESPONSIVENESS ===== */
 @media (max-width: 768px) {
+  header h1 {
+    font-size: 1.5rem;
+/* ===== PRODUCT TITLE COLOR FIX & INTERACTION ON MOBILE ===== */
+.product h3,
+.product a h3 {
+  color: #9b6b43 !important;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
 
-  header h1 { font-size: 1.5rem; }
+.product a:visited h3 {
+  color: #9b6b43 !important;
+}
 
-  .menu-toggle { display: block; }
+/* Darker color on hover or tap for better contrast */
+.product a:hover h3,
+.product a:active h3 {
+  color: #7a5032 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+  }
+
+  .menu-toggle {
+    display: block;
+  }
 
   .menu-links {
     display: none;
     flex-direction: column;
-    background: #b07d62;
-    width: 100%;
-    text-align: center;
+    background-color: #b07d62;
     position: absolute;
     top: 50px;
     left: 0;
+    width: 100%;
+    text-align: center;
     padding: 10px 0;
+    border-radius: 0 0 8px 8px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
   }
 
   .menu-links.active {
     display: flex;
+    opacity: 1;
+    transform: translateY(0);
   }
 
+  /* Fix Cart Icon Visibility */
+  .cart {
+    font-size: 1.4rem;
+    padding: 10px 16px;
+    margin-right: env(safe-area-inset-right);
+  }
+
+  #cartCount {
+    top: -8px;
+    right: -8px;
+    transform: scale(1.1);
+  }
+
+  /* Fix Product Details Layout */
   .product-details {
     flex-direction: column;
     text-align: center;
+    gap: 15px;
   }
 
-  /* Hide Mark as Sold Button Mobile */
+  .details-text {
+    text-align: center;
+  }
+
+  /* Hide Mark as Sold Button */
   .mark-sold-btn {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
     pointer-events: none !important;
   }
-
-  /* Correct product title color on mobile */
-  .product h3 { color: #9b6b43 !important; }
 }
