@@ -8,6 +8,7 @@ body {
   padding: 0;
   background-color: #fdf7f2;
   color: #4a3f35;
+  overflow-x: hidden;
 }
 
 /* ===== HEADER ===== */
@@ -56,6 +57,7 @@ header p {
   align-items: center;
   max-width: 1100px;
   margin: auto;
+  overflow: visible !important;
 }
 
 /* ===== MENU LINKS ===== */
@@ -91,25 +93,48 @@ header p {
 
 /* ===== CART ICON ===== */
 .cart {
-  background: #8b5e3c;
-  padding: 8px 14px;
-  border-radius: 20px;
-  color: white;
-  cursor: pointer;
   position: relative;
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  background: #8b5e3c;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  font-size: 1.3rem;
+  line-height: 1;
+  margin-right: env(safe-area-inset-right);
+  transition: background 0.2s ease;
 }
 
+.cart:hover {
+  background: #a26b45;
+}
+
+.cart img,
+.cart i {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* ===== Item Count Bubble ===== */
 #cartCount {
-  background: red;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ff4d4d;
   color: white;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: bold;
   border-radius: 50%;
-  padding: 2px 6px;
-  position: absolute;
-  top: -5px;
-  right: -8px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
 }
 
 /* ===== CONTAINER ===== */
@@ -150,44 +175,45 @@ header p {
   border-radius: 8px;
 }
 
-.product h3 {
-  margin: 12px 0 5px;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
-  color: #9b6b43;
-}
-
-.product a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.product a:hover h3 {
-  color: #b07d62;
-  transition: all 0.3s ease;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.price {
-  font-weight: bold;
-  color: #9b6b43;
-  font-size: 1rem;
-}
-
-/* ===== BUTTONS ===== */
-.product button {
-  background: #b07d62;
+/* ===== SOLD OUT OVERLAY ===== */
+.sold-tag {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 0, 0, 0.85);
   color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: 'Raleway', sans-serif;
-  transition: background 0.2s ease;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 1rem;
+  text-transform: uppercase;
 }
 
-.product button:hover {
-  background: #895737;
+/* ===== PRODUCT DETAILS ===== */
+.product-details {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 30px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.product-details img {
+  width: 100%;
+  max-width: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.details-text {
+  flex: 1;
+  text-align: left;
 }
 
 /* ===== MARK AS SOLD BUTTON ===== */
@@ -229,84 +255,6 @@ header p {
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* ===== PRODUCT DETAILS ===== */
-.product-details {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 30px;
-  background: #fff;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.product-details img {
-  width: 100%;
-  max-width: 400px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.details-text {
-  flex: 1;
-  text-align: left;
-}
-
-.details-text h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
-  color: #4a3f35;
-  margin-bottom: 10px;
-}
-
-.details-text .price {
-  color: #9b6b43;
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-.details-text .description {
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 20px;
-  color: #5a4a3a;
-}
-
-/* ===== CONTACT SECTION ===== */
-.contact {
-  margin-top: 40px;
-  text-align: center;
-}
-
-.contact a {
-  color: #b07d62;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.contact a:hover {
-  text-decoration: underline;
-}
-
-/* ===== SOLD OUT OVERLAY ===== */
-.sold-tag {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255, 0, 0, 0.85);
-  color: white;
-  font-weight: bold;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 1rem;
-  text-transform: uppercase;
-}
-
 /* ===== FOOTER ===== */
 .site-footer {
   background: #333;
@@ -326,29 +274,10 @@ header p {
   text-decoration: underline;
 }
 
-/* ===== REMOVE BUTTON IN CART ===== */
-.remove-btn {
-  background: none;
-  border: none;
-  color: red;
-  font-weight: bold;
-  cursor: pointer;
-  margin-left: 10px;
-  font-size: 1rem;
-}
-
-.remove-btn:hover {
-  color: darkred;
-}
-
 /* ===== MOBILE RESPONSIVENESS ===== */
 @media (max-width: 768px) {
   header h1 {
     font-size: 1.5rem;
-  }
-
-  header p {
-    font-size: 0.9rem;
   }
 
   .menu-toggle {
@@ -377,12 +306,20 @@ header p {
     transform: translateY(0);
   }
 
+  /* Fix Cart Icon Visibility */
   .cart {
-    font-size: 1.2rem;
-    padding: 8px 14px;
+    font-size: 1.4rem;
+    padding: 10px 16px;
+    margin-right: env(safe-area-inset-right);
   }
 
-  /* Product details layout fix */
+  #cartCount {
+    top: -8px;
+    right: -8px;
+    transform: scale(1.1);
+  }
+
+  /* Fix Product Details Layout */
   .product-details {
     flex-direction: column;
     text-align: center;
@@ -393,70 +330,11 @@ header p {
     text-align: center;
   }
 
-  /* Hide mark as sold button */
+  /* Hide Mark as Sold Button */
   .mark-sold-btn {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
-    pointer-events: none;
+    pointer-events: none !important;
   }
 }
-
-/* --- iPhone Cart Icon Fix --- */
-.menu-bar, .menu-container {
-  overflow: visible !important;
-}
-
-.cart {
-  padding: 8px 14px;
-  line-height: 1.2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: env(safe-area-inset-right);
-}
-
-/* ===== FIX: Cart Icon Alignment & Visibility on All Devices ===== */
-.cart {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 14px;
-  background: #8b5e3c;
-  border-radius: 6px;
-  cursor: pointer;
-  color: white;
-  font-size: 1.2rem;
-  line-height: 1;
-  margin-right: env(safe-area-inset-right);
-  transition: background 0.2s ease;
-}
-
-.cart:hover {
-  background: #a26b45;
-}
-
-/* Cart icon image or emoji spacing */
-.cart img,
-.cart i {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-}
-
-/* ===== Item Count Bubble ===== */
-#cartCount {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  background: #ff4d4d;
-  color: white;
-  font-size: 0.7rem;
-  font-weight: bold;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content
