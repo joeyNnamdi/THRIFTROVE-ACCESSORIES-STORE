@@ -350,25 +350,51 @@ header p {
 }
 
 .add-to-cart {
-  background: #8b5e3c;
-  color: white;
-  padding: 10px 14px;
+  background: #c89b72;
+  color: #fff;
+  padding: 12px 18px;
   border: none;
-  border-radius: 6px;
-  font-size: 0.95rem;
+  border-radius: 40px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.25s ease, transform 0.15s ease;
-  width: 100%; /* optional - full width button */
+  box-shadow: 0 6px 10px rgba(0,0,0,0.12);
+  transition: 0.25s;
 }
 
 .add-to-cart:hover {
-  background: #a26b45;
+  background: #b88358;
+  box-shadow: 0 8px 14px rgba(0,0,0,0.15);
   transform: translateY(-2px);
 }
 
 .add-to-cart:active {
-  background: #6d452c;
-  transform: translateY(0);
+  transform: scale(0.96);
 }
+
+.add-product-btn {
+  background-color: #f7b8cc; /* blush pink */
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.25s ease;
+}
+
+.add-product-btn:hover {
+  background-color: #e39ab3;
+  box-shadow: 0 3px 10px rgba(243, 169, 197, 0.4);
+  transform: translateY(-2px);
+}
+
+.add-product-btn:active {
+  background-color: #d57b9a;
+  transform: scale(0.97);
+}
+
 
