@@ -373,8 +373,8 @@ header p {
 }
 
 .add-product-btn {
-  background-color: #f7b8cc; /* blush pink */
-  color: brown;
+  background-color: brown; /* blush pink */
+  color: chocolate;
   border: none;
   padding: 10px 14px;
   width: 100%;
