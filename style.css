@@ -349,3 +349,26 @@ header p {
     pointer-events: none !important;
 }
 
+.add-to-cart {
+  background: #8b5e3c;
+  color: white;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.15s ease;
+  width: 100%; /* optional - full width button */
+}
+
+.add-to-cart:hover {
+  background: #a26b45;
+  transform: translateY(-2px);
+}
+
+.add-to-cart:active {
+  background: #6d452c;
+  transform: translateY(0);
+}
+
