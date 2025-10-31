@@ -341,3 +341,11 @@ header p {
     display: none !important;
   }
 }
+
+.mark-sold-btn {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
