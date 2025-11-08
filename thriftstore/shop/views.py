@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import requests
 from django.conf import settings
+from django.http import HttpResponse
 
 def store(request):
     return render(request, 'shop/index.html')
@@ -82,3 +83,6 @@ def pudo_quote(request):
             return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "Invalid request method"}, status=400)
+
+def checkout_confirm(request, order_id):
+    return HttpResponse(f"Order {order_id} confirmed successfully! (Placeholder view)")
