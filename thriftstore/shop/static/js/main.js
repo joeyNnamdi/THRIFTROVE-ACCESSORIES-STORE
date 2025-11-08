@@ -128,3 +128,25 @@ document.querySelectorAll(".product").forEach(renderAdminButton);
 function toggleMenu() {
   document.getElementById("menuLinks").classList.toggle("active");
 }
+
+async function getDeliveryQuote(event) {
+  event.preventDefault();
+
+  const formData = new FormData(document.getElementById("deliveryForm"));
+  const response = await fetch("/pudo/quote/", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await response.json();
+  const deliveryResult = document.getElementById("deliveryResult");
+
+  if (data.error) {
+    deliveryResult.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`;
+  } else {
+    deliveryResult.innerHTML = `
+      <h4>Delivery Options:</h4>
+      <pre>${JSON.stringify(data, null, 2)}</pre>
+    `;
+  }
+}

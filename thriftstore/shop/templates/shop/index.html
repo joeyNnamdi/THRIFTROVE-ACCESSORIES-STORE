@@ -190,14 +190,34 @@
   </div>
 
   <div id="cartOverlay" class="cart-overlay">
-    <div class="cart-box">
-      <h2>Your Cart</h2>
-      <ul id="cartItems"></ul>
-      <p>Total: R<span id="cartTotal">0</span></p>
-      <button onclick="checkout()">Checkout</button>
-      <button onclick="toggleCart()">Close</button>
-    </div>
+  <div class="cart-box">
+    <h2>Your Cart</h2>
+    <ul id="cartItems"></ul>
+    <p>Total: R<span id="cartTotal">0</span></p>
+
+    <form id="deliveryForm" onsubmit="return getDeliveryQuote(event)">
+      <h3>Delivery Options</h3>
+
+      <label>
+        Address:
+        <input type="text" id="address" name="address" required>
+      </label>
+
+      <label>
+        Postal Code:
+        <input type="text" id="postalCode" name="postal_code" required>
+      </label>
+
+      <button type="submit">Get Delivery Quote</button>
+    </form>
+
+    <div id="deliveryResult"></div>
+
+    <button onclick="checkout()">Checkout</button>
+    <button onclick="toggleCart()">Close</button>
   </div>
+</div>
+
 
   <footer class="site-footer">
    <p>© 2025 Thriftrove Accessories — All Rights Reserved</p>
