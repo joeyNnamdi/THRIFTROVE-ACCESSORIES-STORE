@@ -129,24 +129,77 @@ function toggleMenu() {
   document.getElementById("menuLinks").classList.toggle("active");
 }
 
-async function getDeliveryQuote(event) {
-  event.preventDefault();
-
-  const formData = new FormData(document.getElementById("deliveryForm"));
-  const response = await fetch("/pudo/quote/", {
-    method: "POST",
-    body: formData,
+document.querySelectorAll('input[name="delivery_type"]').forEach(radio=>{
+  radio.addEventListener('change', ()=> {
+    if (radio.value === 'locker' && radio.checked){
+      document.getElementById('homeFields').style.display = 'none';
+      document.getElementById('lockerFields').style.display = 'block';
+      loadLockers();
+    } else {
+      document.getElementById('homeFields').style.display = 'block';
+      document.getElementById('lockerFields').style.display = 'none';
+    }
   });
+});
 
-  const data = await response.json();
-  const deliveryResult = document.getElementById("deliveryResult");
+async function loadLockers(){
+  const resp = await fetch("{% url 'pudo_lockers' %}");
+  const data = await resp.json();
+  const sel = document.getElementById('lockerSelect');
+  sel.innerHTML = '';
+  data.forEach(l => {
+    const opt = document.createElement('option');
+    opt.value = l.terminal_id;
+    opt.textContent = l.name + ' – ' + (l.suburb || '');
+    sel.append(opt);
+  });
+}
 
-  if (data.error) {
-    deliveryResult.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`;
+async function getDeliveryQuote(event){
+  event.preventDefault();
+  const form = document.getElementById('deliveryForm');
+  const type = form.delivery_type.value;
+  let payload = { "delivery_type": type };
+
+  if (type === 'home'){
+    payload.collection_address = {
+      "lat": null,
+      "lng": null,
+      "street_address": "Your Store Address",
+      "local_area": "Your Area",
+      "suburb": "Your Suburb",
+      "city": "Your City",
+      "code": "Your PostalCode",
+      "zone": "Your Province",
+      "country": "South Africa",
+      "entered_address": "Your Store Address Full",
+      "type": "business"
+    };
+    payload.delivery_address = {
+      "street_address": document.getElementById('address').value,
+      "code": document.getElementById('postalCode').value,
+      "country": "South Africa",
+      "type": "residential"
+    };
   } else {
-    deliveryResult.innerHTML = `
-      <h4>Delivery Options:</h4>
-      <pre>${JSON.stringify(data, null, 2)}</pre>
-    `;
+    payload.collection_address = {
+      "street_address": "Your Store Address",
+      "type": "business"
+    };
+    payload.delivery_address = {
+      "terminal_id": form.locker_id.value
+    };
   }
+
+  const resp = await fetch("{% url 'pudo_quote' %}", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  const data = await resp.json();
+  document.getElementById('deliveryResult').textContent = JSON.stringify(data, null, 2);
+  if(data.order_id){
+    // Optionally redirect to confirmation: window.location = `/checkout/confirm/${data.order_id}/`;
+  }
+  return false;
 }
