@@ -127,3 +127,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 import os
 PUDO_API_KEY = os.getenv("PUDO_API_KEY")
+
+
+# PUDO API settings
+PUDO_API_URL = "https://sandbox.api-pudo.co.za/api/v1/rates"
+PUDO_API_KEY = "PUDO_API_KEY"
