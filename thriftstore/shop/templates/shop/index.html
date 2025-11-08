@@ -190,36 +190,46 @@
   </div>
 
   <div id="cartOverlay" class="cart-overlay">
-  <div class="cart-box">
-    <h2>Your Cart</h2>
-    <ul id="cartItems"></ul>
-    <p>Total: R<span id="cartTotal">0</span></p>
+  <div class="checkout-container">
+  <h2>Your Cart</h2>
+  <p>Total: <span id="cartTotal">R0.00</span></p>
 
-<form id="deliveryForm" onsubmit="return getDeliveryQuote(event)">
+  <hr>
+
   <h3>Delivery Options</h3>
-  <label><input type="radio" name="delivery_type" value="home" checked> Home Delivery</label>
-  <label><input type="radio" name="delivery_type" value="locker"> Pickup at Locker</label>
+  <form id="deliveryForm" onsubmit="return getDeliveryQuote(event)">
+    <div class="delivery-option">
+      <label>
+        <input type="radio" name="delivery_type" value="HOME" checked> Home Delivery
+      </label>
+      <label>
+        <input type="radio" name="delivery_type" value="PUDO"> Pickup at Locker
+      </label>
+    </div>
 
-  <div id="homeFields">
     <label>
       Address:
       <input type="text" id="address" name="address" required>
     </label>
+
     <label>
       Postal Code:
       <input type="text" id="postalCode" name="postal_code" required>
     </label>
-  </div>
 
-  <div id="lockerFields" style="display:none;">
-    <label>
-      Choose Locker:
-      <select id="lockerSelect" name="locker_id"></select>
-    </label>
-  </div>
+    <button type="submit" class="delivery-btn">Get Delivery Quote</button>
+  </form>
 
-  <button type="submit">Get Delivery Quote</button>
-</form>
+  <div id="deliveryResult"></div>
+</div>
+
+<div id="lockerContainer" style="display:none;">
+  <label for="lockerSelect">Select Pickup Locker:</label>
+  <select id="lockerSelect" name="delivery_terminal">
+    <option value="">Loading lockers...</option>
+  </select>
+</div>
+
     <button onclick="checkout()">Checkout</button>
     <button onclick="toggleCart()">Close</button>
   </div>

@@ -203,3 +203,74 @@ async function getDeliveryQuote(event){
   }
   return false;
 }
+
+async function getDeliveryQuote(event) {
+  event.preventDefault();
+
+  const address = document.getElementById('address').value;
+  const postalCode = document.getElementById('postalCode').value;
+  const deliveryType = document.querySelector('input[name="delivery_type"]:checked').value;
+
+  const formData = new FormData();
+  formData.append('address', address);
+  formData.append('postal_code', postalCode);
+  formData.append('delivery_type', deliveryType);
+
+  try {
+    const response = await fetch('/pudo/quote/', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      document.getElementById('deliveryResult').innerHTML =
+        `<p style="color:red;">Error: ${data.error}</p>`;
+    } else {
+      document.getElementById('deliveryResult').innerHTML =
+        `<p>Estimated Delivery Cost: <strong>R${data.cost}</strong></p>`;
+    }
+  } catch (err) {
+    document.getElementById('deliveryResult').innerHTML =
+      `<p style="color:red;">Error fetching delivery quote.</p>`;
+  }
+
+  return false;
+}
+
+// Show/hide locker dropdown based on selected delivery type
+document.querySelectorAll('input[name="delivery_type"]').forEach(el => {
+  el.addEventListener('change', () => {
+    const lockerContainer = document.getElementById('lockerContainer');
+    if (el.value === 'PUDO' && el.checked) {
+      lockerContainer.style.display = 'block';
+      loadLockers();
+    } else {
+      lockerContainer.style.display = 'none';
+    }
+  });
+});
+
+async function loadLockers() {
+  try {
+    const res = await fetch('/pudo/lockers/');
+    const data = await res.json();
+    const lockerSelect = document.getElementById('lockerSelect');
+    lockerSelect.innerHTML = ''; // clear existing
+    if (Array.isArray(data)) {
+      data.forEach(locker => {
+        const option = document.createElement('option');
+        option.value = locker.terminal_id;
+        option.textContent = `${locker.name} - ${locker.city}`;
+        lockerSelect.appendChild(option);
+      });
+    } else {
+      lockerSelect.innerHTML = `<option>No lockers found</option>`;
+    }
+  } catch (err) {
+    console.error('Error loading lockers:', err);
+    document.getElementById('lockerSelect').innerHTML =
+      `<option>Error fetching lockers</option>`;
+  }
+}

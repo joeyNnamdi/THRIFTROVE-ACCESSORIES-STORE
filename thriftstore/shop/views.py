@@ -1,73 +1,84 @@
-import json
-import requests
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import requests
 from django.conf import settings
-from .models import Locker, Order
 
 def store(request):
-    # your product listing logic here
     return render(request, 'shop/index.html')
+
 
 @csrf_exempt
 def pudo_lockers(request):
-    if request.method == "GET":
-        resp = requests.get(
-            "https://api-pudo.co.za/api/v1/guest/lockers-data",
-            headers={"Authorization": f"Bearer {settings.PUDO_API_KEY}"}
+    """
+    Fetch locker locations from PUDO API (for dropdown selection)
+    """
+    try:
+        response = requests.get(
+            "https://sandbox.api-pudo.co.za/api/v1/guest/lockers-data",
+            headers={
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            timeout=10
         )
-        try:
-            data = resp.json()
-        except ValueError:
-            return JsonResponse({"error": "Invalid JSON", "raw": resp.text}, status=500)
-        # Optionally save lockers locally
-        for l in data:
-            Locker.objects.update_or_create(
-                terminal_id = l.get("terminal_id"),
-                defaults = {
-                    "name": l.get("name"),
-                    "suburb": l.get("suburb"),
-                    "city": l.get("city"),
-                    "lat": l.get("lat"),
-                    "lng": l.get("lng"),
-                }
-            )
-        return JsonResponse(data, safe=False)
-    return JsonResponse({"error": "Invalid method"}, status=400)
+        if response.status_code == 200:
+            data = response.json()
+            return JsonResponse(data, safe=False)
+        else:
+            return JsonResponse({"error": f"PUDO API returned {response.status_code}"}, status=500)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
 
 @csrf_exempt
 def pudo_quote(request):
-    if request.method != "POST":
-        return JsonResponse({"error": "Invalid method"}, status=400)
+    """
+    Get delivery cost estimate from PUDO API
+    """
+    if request.method == "POST":
+        delivery_type = request.POST.get("delivery_type")
+        address = request.POST.get("address")
+        postal_code = request.POST.get("postal_code")
+        collection_terminal = request.POST.get("collection_terminal", "CG107")  # Example pickup
+        delivery_terminal = request.POST.get("delivery_terminal", "CG929")      # Example dropoff
 
-    body = json.loads(request.body)
-    resp = requests.post(
-        "https://sandbox.api-pudo.co.za/api/v1/rates",
-        headers={
-            "Authorization": f"Bearer {settings.PUDO_API_KEY}",
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-        json=body,
-        timeout=15
-    )
-    try:
-        data = resp.json()
-    except ValueError:
-        return JsonResponse({"error": "Invalid JSON", "raw": resp.text, "status": resp.status_code}, status=500)
-    # Create an Order record (example)
-    order = Order.objects.create(
-        user = request.user if request.user.is_authenticated else None,
-        total_amount = sum(item["price"] for item in request.session.get("cart", [])),
-        delivery_type = body.get("delivery_type"),
-        locker = Locker.objects.filter(terminal_id=body.get("delivery_address", {}).get("terminal_id")).first() if body.get("delivery_type")=="locker" else None,
-        quote_data = data,
-        submitted = False
-    )
-    return JsonResponse({"order_id": order.id, "quote": data})
+        payload = {
+            "collection_address": {"terminal_id": collection_terminal},
+            "delivery_address": {"terminal_id": delivery_terminal}
+        }
 
-def checkout_confirm(request, order_id):
-    order = Order.objects.get(id=order_id)
-    # Render confirmation page where user carries out payment and confirms
-    return render(request, 'shop/checkout_confirm.html', {"order": order})
+        # If it's home delivery, adjust payload accordingly
+        if delivery_type == "HOME":
+            payload = {
+                "collection_address": {"terminal_id": collection_terminal},
+                "delivery_address": {
+                    "address_line_1": address,
+                    "postal_code": postal_code
+                }
+            }
+
+        try:
+            response = requests.post(
+                "https://sandbox.api-pudo.co.za/api/v1/rates",
+                headers={
+                    "Authorization": f"Bearer {settings.PUDO_API_KEY}",
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                json=payload,
+                timeout=10,
+            )
+
+            if response.status_code == 200:
+                pudo_response = response.json()
+                return JsonResponse(pudo_response)
+            else:
+                return JsonResponse(
+                    {"error": f"PUDO API returned {response.status_code}: {response.text}"},
+                    status=response.status_code
+                )
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=400)
