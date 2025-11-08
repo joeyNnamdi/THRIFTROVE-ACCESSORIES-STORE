@@ -30,7 +30,7 @@ def pudo_delivery_quote(request):
 
         try:
             response = requests.post(
-                "https://api.pudo.co.za/api/v1/guest/lockers-data",
+                "https://sandbox.api-pudo.co.za/api/v1/rates",
                 headers={
                     "Authorization": f"Bearer {settings.PUDO_API_KEY}",
                     "Content-Type": "application/json",
