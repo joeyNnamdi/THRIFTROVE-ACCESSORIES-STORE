@@ -274,3 +274,46 @@ async function loadLockers() {
       `<option>Error fetching lockers</option>`;
   }
 }
+
+document.getElementById("deliveryType").addEventListener("change", function() {
+  const type = this.value;
+  const addressFields = document.getElementById("addressFields");
+  const lockerFields = document.getElementById("lockerFields");
+
+  if (type === "PUDO") {
+    addressFields.style.display = "none";
+    lockerFields.style.display = "block";
+    loadPudoLockers(); // load lockers only when user selects PUDO
+  } else {
+    addressFields.style.display = "block";
+    lockerFields.style.display = "none";
+  }
+});
+
+
+async function loadPudoLockers() {
+  const lockerDropdown = document.getElementById("lockerSelect");
+  lockerDropdown.innerHTML = "<option>Loading lockers...</option>";
+
+  try {
+    const response = await fetch("/pudo/lockers/");
+    const data = await response.json();
+
+    if (data.error) {
+      lockerDropdown.innerHTML = `<option>${data.error}</option>`;
+      return;
+    }
+
+    lockerDropdown.innerHTML = ""; // clear loading message
+
+    data.forEach(locker => {
+      // Depending on API structure, you may need locker.terminal_id or locker.code
+      const option = document.createElement("option");
+      option.value = locker.terminal_id || locker.code;
+      option.textContent = `${locker.location_name || locker.name} - ${locker.city || locker.suburb}`;
+      lockerDropdown.appendChild(option);
+    });
+  } catch (err) {
+    lockerDropdown.innerHTML = `<option>Error: ${err.message}</option>`;
+  }
+}

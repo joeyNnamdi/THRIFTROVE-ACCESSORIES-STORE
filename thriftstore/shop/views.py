@@ -22,12 +22,12 @@ def pudo_lockers(request):
                 "Content-Type": "application/json"
             },
             timeout=10
-        )
-        if response.status_code == 200:
-            data = response.json()
-            return JsonResponse(data, safe=False)
-        else:
-            return JsonResponse({"error": f"PUDO API returned {response.status_code}"}, status=500)
+        )  
+        lockers = response.json()
+            
+        return JsonResponse(lockers, safe=False)
+        
+        return JsonResponse({"error": f"PUDO API returned {response.status_code}"}, status=500)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
 
