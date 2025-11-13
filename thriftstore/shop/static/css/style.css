@@ -431,3 +431,33 @@ header p {
   color: #444;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1; /* ensures main content takes up available space */
+  padding: 20px;
+}
+
+footer {
+  background: #222;
+  color: #fff;
+  text-align: center;
+  padding: 15px 10px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+#checkout {
+  background: #fafafa;
+  padding: 20px;
+  margin-top: 30px;
+  border-top: 2px solid #ddd;
+  border-radius: 8px;
+}

@@ -54,7 +54,7 @@
         <h3>Preloved Red LongChamp Le Pliage Handbag</h3>
        </a>
         <p class="price">R5800</p>
-        <button class="add-product-btn" onclick="addToCart('Classic Leather Bag', 5800)">Add to Cart</button>
+        <button class="add-product-btn" onclick="addToCart(101)('Classic Leather Bag', 5800)">Add to Cart</button>
         <button class="mark-sold-btn" onclick="markAsSold(this)">Mark as SOLD</button>
       </div>
 
@@ -181,7 +181,7 @@
 
       <!-- Add more products here -->
     </section>
-
+   
     <div class="contact">
       <h2>📩 Contact Us</h2>
       <p>Email: <a href="mailto:sales@thriftrove-accessories-store.co.za">sales@thriftrove-accessories-store.co.za</a></p>
@@ -211,16 +211,14 @@
 <div id="lockerFields" style="display: none;">
   <label>Select Pickup Locker:</label>
   <select id="lockerSelect"></select>
-</div>
+
 
 <button onclick="getDeliveryQuote()">Get Delivery Quote</button>
 
 <div id="deliveryResult"></div>
 
-  <div>
     <button onclick="checkout()">Checkout</button>
     <button onclick="toggleCart()">Close</button>
-  </div>
 </div>
 
   <footer class="site-footer">

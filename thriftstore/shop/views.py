@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import requests
 from django.conf import settings
 from django.http import HttpResponse
+from django.http import JsonResponse
 
 def store(request):
     return render(request, 'shop/index.html')
@@ -86,3 +87,14 @@ def pudo_quote(request):
 
 def checkout_confirm(request, order_id):
     return HttpResponse(f"Order {order_id} confirmed successfully! (Placeholder view)")
+
+def add_to_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    cart[product_id] = cart.get(product_id, 0) + 1
+    request.session['cart'] = cart
+    return JsonResponse({'cart_count': sum(cart.values())})
+
+def view_cart(request):
+    cart = request.session.get('cart', {})
+    total_items = sum(cart.values())
+    return render(request, 'shop/cart.html', {'cart': cart, 'total_items': total_items})

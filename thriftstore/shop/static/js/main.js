@@ -317,3 +317,9 @@ async function loadPudoLockers() {
     lockerDropdown.innerHTML = `<option>Error: ${err.message}</option>`;
   }
 }
+
+async function addToCart(productId) {
+  const response = await fetch(`/add/${productId}/`);
+  const data = await response.json();
+  document.getElementById('cartCount').textContent = data.cart_count;
+}
