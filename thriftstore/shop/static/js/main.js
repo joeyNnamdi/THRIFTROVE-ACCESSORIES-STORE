@@ -1,7 +1,6 @@
 // ===== ADMIN MODE TOGGLE =====
 let isAdmin = localStorage.getItem("adminMode") === "true";
 
-// Toggle admin mode using SHIFT + D
 document.addEventListener("keydown", (event) => {
   if (event.key.toLowerCase() === "d" && event.shiftKey) {
     isAdmin = !isAdmin;
@@ -11,56 +10,56 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// ===== CART FUNCTIONALITY =====
+// ===== CART SYSTEM =====
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// Initialize cart on load
 window.onload = function () {
   updateCart();
 };
 
-// Add to cart
+// Add product to cart
 function addToCart(productName, price) {
   cart.push({ name: productName, price: price });
   saveCart();
   updateCart();
 }
 
-// Update cart display
+// Update cart UI
 function updateCart() {
   const cartItems = document.getElementById("cartItems");
   const cartTotal = document.getElementById("cartTotal");
+  const cartCount = document.getElementById("cartCount");
+
+  if (!cartItems) return; // page safety check
 
   cartItems.innerHTML = "";
   let total = 0;
 
   cart.forEach((item, index) => {
-    const li = document.createElement("li");
-    li.innerHTML = `
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+    div.innerHTML = `
       ${item.name} - R${item.price.toFixed(2)}
       <button class="remove-btn" onclick="removeFromCart(${index})">❌</button>
     `;
-    cartItems.appendChild(li);
+    cartItems.appendChild(div);
     total += item.price;
   });
 
-  cartTotal.textContent = total.toFixed(2);
-  document.getElementById("cartCount").textContent = cart.length;
+  cartTotal.textContent = "R" + total.toFixed(2);
+  if (cartCount) cartCount.textContent = cart.length;
 }
 
-// Remove cart item
 function removeFromCart(index) {
   cart.splice(index, 1);
   saveCart();
   updateCart();
 }
 
-// Save cart to storage
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-// Toggle cart popup
 function toggleCart() {
   document.getElementById("cartOverlay").classList.toggle("show");
 }
@@ -77,7 +76,6 @@ function checkout() {
   const form = document.createElement("form");
   form.method = "POST";
   form.action = "https://www.payfast.co.za/eng/process";
-
   form.innerHTML = `
     <input type="hidden" name="merchant_id" value="16931721">
     <input type="hidden" name="merchant_key" value="vqz7dadeb0bre">
@@ -87,7 +85,6 @@ function checkout() {
     <input type="hidden" name="amount" value="${total.toFixed(2)}">
     <input type="hidden" name="item_name" value="Thriftrove Order">
   `;
-
   document.body.appendChild(form);
   form.submit();
 
@@ -96,10 +93,9 @@ function checkout() {
   updateCart();
 }
 
-// ===== MARK AS SOLD (Admin only) =====
+// ===== ADMIN MARK AS SOLD =====
 function renderAdminButton(productDiv) {
-  if (!isAdmin) return; // only show to admin
-
+  if (!isAdmin) return;
   const soldBtn = document.createElement("button");
   soldBtn.className = "mark-sold-btn";
   soldBtn.textContent = "Mark as Sold";
@@ -107,175 +103,26 @@ function renderAdminButton(productDiv) {
   productDiv.appendChild(soldBtn);
 }
 
-// Function called when admin clicks mark sold
 function markAsSold(button) {
   const productDiv = button.closest(".product");
-
-  productDiv.querySelectorAll("button").forEach((btn) => btn.disabled = true);
+  productDiv.querySelectorAll("button").forEach((btn) => (btn.disabled = true));
 
   const soldTag = document.createElement("div");
   soldTag.textContent = "SOLD OUT";
   soldTag.classList.add("sold-tag");
   productDiv.appendChild(soldTag);
-
   productDiv.style.opacity = "0.6";
 }
 
-// Call this after loading products if using JS-generated items
 document.querySelectorAll(".product").forEach(renderAdminButton);
 
-// ===== MOBILE MENU =====
+// ===== MENU TOGGLE =====
 function toggleMenu() {
   document.getElementById("menuLinks").classList.toggle("active");
 }
 
-document.querySelectorAll('input[name="delivery_type"]').forEach(radio=>{
-  radio.addEventListener('change', ()=> {
-    if (radio.value === 'locker' && radio.checked){
-      document.getElementById('homeFields').style.display = 'none';
-      document.getElementById('lockerFields').style.display = 'block';
-      loadLockers();
-    } else {
-      document.getElementById('homeFields').style.display = 'block';
-      document.getElementById('lockerFields').style.display = 'none';
-    }
-  });
-});
-
-async function loadLockers(){
-  const resp = await fetch("{% url 'pudo_lockers' %}");
-  const data = await resp.json();
-  const sel = document.getElementById('lockerSelect');
-  sel.innerHTML = '';
-  data.forEach(l => {
-    const opt = document.createElement('option');
-    opt.value = l.terminal_id;
-    opt.textContent = l.name + ' – ' + (l.suburb || '');
-    sel.append(opt);
-  });
-}
-
-async function getDeliveryQuote(event){
-  event.preventDefault();
-  const form = document.getElementById('deliveryForm');
-  const type = form.delivery_type.value;
-  let payload = { "delivery_type": type };
-
-  if (type === 'home'){
-    payload.collection_address = {
-      "lat": null,
-      "lng": null,
-      "street_address": "Your Store Address",
-      "local_area": "Your Area",
-      "suburb": "Your Suburb",
-      "city": "Your City",
-      "code": "Your PostalCode",
-      "zone": "Your Province",
-      "country": "South Africa",
-      "entered_address": "Your Store Address Full",
-      "type": "business"
-    };
-    payload.delivery_address = {
-      "street_address": document.getElementById('address').value,
-      "code": document.getElementById('postalCode').value,
-      "country": "South Africa",
-      "type": "residential"
-    };
-  } else {
-    payload.collection_address = {
-      "street_address": "Your Store Address",
-      "type": "business"
-    };
-    payload.delivery_address = {
-      "terminal_id": form.locker_id.value
-    };
-  }
-
-  const resp = await fetch("{% url 'pudo_quote' %}", {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-  const data = await resp.json();
-  document.getElementById('deliveryResult').textContent = JSON.stringify(data, null, 2);
-  if(data.order_id){
-    // Optionally redirect to confirmation: window.location = `/checkout/confirm/${data.order_id}/`;
-  }
-  return false;
-}
-
-async function getDeliveryQuote(event) {
-  event.preventDefault();
-
-  const address = document.getElementById('address').value;
-  const postalCode = document.getElementById('postalCode').value;
-  const deliveryType = document.querySelector('input[name="delivery_type"]:checked').value;
-
-  const formData = new FormData();
-  formData.append('address', address);
-  formData.append('postal_code', postalCode);
-  formData.append('delivery_type', deliveryType);
-
-  try {
-    const response = await fetch('/pudo/quote/', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const data = await response.json();
-
-    if (data.error) {
-      document.getElementById('deliveryResult').innerHTML =
-        `<p style="color:red;">Error: ${data.error}</p>`;
-    } else {
-      document.getElementById('deliveryResult').innerHTML =
-        `<p>Estimated Delivery Cost: <strong>R${data.cost}</strong></p>`;
-    }
-  } catch (err) {
-    document.getElementById('deliveryResult').innerHTML =
-      `<p style="color:red;">Error fetching delivery quote.</p>`;
-  }
-
-  return false;
-}
-
-// Show/hide locker dropdown based on selected delivery type
-document.querySelectorAll('input[name="delivery_type"]').forEach(el => {
-  el.addEventListener('change', () => {
-    const lockerContainer = document.getElementById('lockerContainer');
-    if (el.value === 'PUDO' && el.checked) {
-      lockerContainer.style.display = 'block';
-      loadLockers();
-    } else {
-      lockerContainer.style.display = 'none';
-    }
-  });
-});
-
-async function loadLockers() {
-  try {
-    const res = await fetch('/pudo/lockers/');
-    const data = await res.json();
-    const lockerSelect = document.getElementById('lockerSelect');
-    lockerSelect.innerHTML = ''; // clear existing
-    if (Array.isArray(data)) {
-      data.forEach(locker => {
-        const option = document.createElement('option');
-        option.value = locker.terminal_id;
-        option.textContent = `${locker.name} - ${locker.city}`;
-        lockerSelect.appendChild(option);
-      });
-    } else {
-      lockerSelect.innerHTML = `<option>No lockers found</option>`;
-    }
-  } catch (err) {
-    console.error('Error loading lockers:', err);
-    document.getElementById('lockerSelect').innerHTML =
-      `<option>Error fetching lockers</option>`;
-  }
-}
-
-document.getElementById("deliveryType").addEventListener("change", function() {
+// ===== DELIVERY OPTION TOGGLE =====
+document.getElementById("deliveryType").addEventListener("change", function () {
   const type = this.value;
   const addressFields = document.getElementById("addressFields");
   const lockerFields = document.getElementById("lockerFields");
@@ -283,14 +130,14 @@ document.getElementById("deliveryType").addEventListener("change", function() {
   if (type === "PUDO") {
     addressFields.style.display = "none";
     lockerFields.style.display = "block";
-    loadPudoLockers(); // load lockers only when user selects PUDO
+    loadPudoLockers();
   } else {
     addressFields.style.display = "block";
     lockerFields.style.display = "none";
   }
 });
 
-
+// ===== LOAD PUDO LOCKERS =====
 async function loadPudoLockers() {
   const lockerDropdown = document.getElementById("lockerSelect");
   lockerDropdown.innerHTML = "<option>Loading lockers...</option>";
@@ -304,22 +151,68 @@ async function loadPudoLockers() {
       return;
     }
 
-    lockerDropdown.innerHTML = ""; // clear loading message
-
-    data.forEach(locker => {
-      // Depending on API structure, you may need locker.terminal_id or locker.code
+    lockerDropdown.innerHTML = "";
+    data.forEach((locker) => {
       const option = document.createElement("option");
       option.value = locker.terminal_id || locker.code;
-      option.textContent = `${locker.location_name || locker.name} - ${locker.city || locker.suburb}`;
+      option.textContent = `${locker.name} - ${locker.city || locker.suburb}`;
       lockerDropdown.appendChild(option);
     });
   } catch (err) {
-    lockerDropdown.innerHTML = `<option>Error: ${err.message}</option>`;
+    lockerDropdown.innerHTML = `<option>Error loading lockers</option>`;
+    console.error(err);
   }
 }
 
-async function addToCart(productId) {
-  const response = await fetch(`/add/${productId}/`);
-  const data = await response.json();
-  document.getElementById('cartCount').textContent = data.cart_count;
+// ===== PUDO QUOTE FETCH =====
+async function getDeliveryQuote() {
+  const deliveryType = document.getElementById("deliveryType").value;
+  const resultDiv = document.getElementById("deliveryResult");
+
+  let payload;
+
+  if (deliveryType === "PUDO") {
+    const lockerId = document.getElementById("lockerSelect").value;
+    if (!lockerId) return alert("Please select a locker.");
+
+    payload = {
+      collection_address: { terminal_id: "CG107" }, // origin locker/store
+      delivery_address: { terminal_id: lockerId },
+    };
+  } else {
+    const address = document.getElementById("address").value;
+    const postalCode = document.getElementById("postalCode").value;
+
+    if (!address || !postalCode) {
+      alert("Please fill in your address and postal code.");
+      return;
+    }
+
+    payload = {
+      collection_address: { terminal_id: "CG107" },
+      delivery_address: {
+        street_address: address,
+        code: postalCode,
+        country: "South Africa",
+      },
+    };
+  }
+
+  try {
+    const res = await fetch("/pudo/quote/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+    if (data.error) {
+      resultDiv.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`;
+    } else {
+      resultDiv.innerHTML = `<p>Estimated Delivery: <strong>R${data.rate || data.cost}</strong></p>`;
+    }
+  } catch (err) {
+    resultDiv.innerHTML = `<p style="color:red;">Failed to fetch delivery quote.</p>`;
+    console.error(err);
+  }
 }
